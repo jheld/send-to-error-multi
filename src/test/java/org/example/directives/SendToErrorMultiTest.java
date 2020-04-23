@@ -23,7 +23,6 @@ public class SendToErrorMultiTest {
         // TODO: Add the send-to-error-multi directive with two conditions:
         // 1. checks that the encounter is empty
         // 2. checks that age is less than or equal to 0
-        recipe.add("send-to-error-multi \'string:isEmpty(encounter),age<=0\'");
 
         TestRows rows = new TestRows();
         rows.add(new Row("body", "en1,0,john,doe"));

@@ -28,7 +28,6 @@ import java.util.Map;
  * false, then the row will be accepted.
  * </p>
  */
-// TODO: register this plugin to be of type Directive, using Directive.TYPE, and set its name as SendToErrorMulti.NAME
 @Plugin(type = Directive.TYPE)
 @Name(SendToErrorMulti.NAME)
 @Categories(categories = {"row", "data-quality"})
@@ -52,7 +51,7 @@ public class SendToErrorMulti implements Directive {
         UsageDefinition.Builder builder = UsageDefinition.builder(NAME);
         // TODO: define the conditions and metrics parameters as TokenType.TEXT. Make the metrics parameter optional.
         builder.define("conditions", TokenType.TEXT);
-        builder.define("metrics", TokenType.TEXT, Optional.TRUE);
+        builder.define("metrics", TokenType.TEXT);
         return builder.build();
 
     }
@@ -60,13 +59,13 @@ public class SendToErrorMulti implements Directive {
     @Override
     public void initialize(Arguments args) throws DirectiveParseException {
         // TODO: read the value of the parameter "conditions" in the variable "conditionsParamValue"
-        String conditionsParamValue = ((Text) args.value("conditions")).value();
+        String conditionsParamValue = null;
         String[] conditionsList = conditionsParamValue.split(",");
         String[] metricsList = null;
         // TODO: read the value of the "metrics" parameter in the variable "metricsParamValue" only if the metrics param
         // exists, since it is an optional parameter
         if (args.contains("metrics")) {
-            String metricsParamValue = ((Text) args.value("metrics")).value();
+            String metricsParamValue = null;
             metricsList = metricsParamValue.split(",");
         }
         if (metricsList != null && conditionsList.length != metricsList.length) {
@@ -132,8 +131,6 @@ public class SendToErrorMulti implements Directive {
                         // so set the atLeastOneConditionSatisfied variable to 1 in such a case
                         // also, since we want to capture all the conditions that were met, capture the condition that was satisfied
                         // in the satisfiedConditions list
-                        atLeastOneConditionSatisfied = true;
-                        satisfiedConditions.add(condition);
                     }
                 } catch (ELException e) {
                     throw new DirectiveExecutionException(e.getMessage());
@@ -143,8 +140,6 @@ public class SendToErrorMulti implements Directive {
                 // TODO: If at least 1 condition is satisfied, we want to send to error
                 // Do that by throwing an ErrorRowException. Set the message in the exception to be a comma separated list of
                 // all satisfied conditions
-                throw new ErrorRowException(Joiner.on(",").join(satisfiedConditions), 1);
-
             }
             results.add(row);
         }
