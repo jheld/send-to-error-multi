@@ -23,12 +23,12 @@
   <groupId>com.example</groupId>
   <artifactId>send-to-error-multi</artifactId>
   <name>Send to Error Modified</name>
-  <version>1.2.0-SNAPSHOT</version>
+  <version>1.2.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <properties>
     <cdap.version>6.0.0</cdap.version>
-    <wrangler.version>4.0.0</wrangler.version>
+    <wrangler.version>4.8.1</wrangler.version>
     <commons.codec.version>1.10</commons.codec.version>
     <junit.version>4.12</junit.version>
   </properties>
@@ -63,6 +63,12 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>io.cdap.wrangler</groupId>
+      <artifactId>wrangler-core</artifactId>
+      <version>${wrangler.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>io.cdap.cdap</groupId>
       <artifactId>cdap-api</artifactId>
       <version>${cdap.version}</version>
@@ -78,31 +84,15 @@
     <!-- External Dependencies -->
 
     <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-jexl3</artifactId>
-      <version>3.0</version>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>${commons.codec.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>20.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-      <version>3.5</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-      <version>1.2</version>
     </dependency>
 
     <!-- Testing Dependencies -->
@@ -118,12 +108,6 @@
       <artifactId>junit</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>27.0-android</version>
-      <scope>compile</scope>
     </dependency>
   </dependencies>
 
@@ -172,7 +156,6 @@
         <configuration>
           <cdapArtifacts>
             <parent>system:wrangler-transform[4.0.0,5.0.0)</parent>
-            <parent>system:wrangler-service[4.0.0,5.0.0)</parent>
           </cdapArtifacts>
         </configuration>
         <executions>
